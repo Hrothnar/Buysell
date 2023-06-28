@@ -4,6 +4,10 @@ public class TLogin {
     private String username;
     private String password;
 
+    public TLogin() {
+
+    }
+
     public TLogin(String username, String password) {
         this.username = username;
         this.password = password;
