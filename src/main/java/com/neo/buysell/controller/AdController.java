@@ -1,9 +1,9 @@
 package com.neo.buysell.controller;
 
-import com.neo.buysell.model.dto.TAd;
-import com.neo.buysell.model.dto.TAds;
-import com.neo.buysell.model.dto.TComment;
-import com.neo.buysell.model.dto.TComments;
+import com.neo.buysell.model.dto.AdDTO;
+import com.neo.buysell.model.dto.AdsDTO;
+import com.neo.buysell.model.dto.CommentDTO;
+import com.neo.buysell.model.dto.CommentsDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,21 +16,21 @@ import javax.servlet.http.HttpServletRequest;
 public class AdController {
 
     @GetMapping()
-    public TAds getAllAds() {
+    public AdsDTO getAllAds() {
         //logic
-        return new TAds();
+        return new AdsDTO();
     }
 
     @PostMapping()
-    public TAd addAd(@RequestParam MultipartFile file) {
+    public AdDTO addAd(@RequestParam MultipartFile file) {
         //logic
-        return new TAd();
+        return new AdDTO();
     }
 
     @GetMapping("/{id}")
-    public TAd getAd(@PathVariable("id") long id) {
+    public AdDTO getAd(@PathVariable("id") long id) {
         //logic
-        return new TAd();
+        return new AdDTO();
     }
 
     @DeleteMapping("/{id}")
@@ -40,15 +40,15 @@ public class AdController {
     }
 
     @PatchMapping("/{id}")
-    public TAd updateAd(@PathVariable("id") long id, @RequestBody TAd tAd) {
+    public AdDTO updateAd(@PathVariable("id") long id, @RequestBody AdDTO adDTO) {
         //logic
-        return tAd;
+        return adDTO;
     }
 
     @GetMapping("/me")
-    public TAds getAllAds(HttpServletRequest request) {
+    public AdsDTO getAllAds(HttpServletRequest request) {
         //logic
-        return new TAds();
+        return new AdsDTO();
     }
 
     @PatchMapping("/{id}/image")
@@ -58,15 +58,15 @@ public class AdController {
     }
 
     @GetMapping("/{id}/comments")
-    public TComments getAdComments(@PathVariable("id") long id) {
+    public CommentsDTO getAdComments(@PathVariable("id") long id) {
         //logic
-        return new TComments();
+        return new CommentsDTO();
     }
 
     @PostMapping("/{id}/comments")
-    public TComment addComment(@PathVariable("id") long id, @RequestBody String text) {
+    public CommentDTO addComment(@PathVariable("id") long id, @RequestBody String text) {
         //logic
-        return new TComment();
+        return new CommentDTO();
     }
 
     @DeleteMapping("/{id}/comments/{commentId}")
@@ -76,9 +76,9 @@ public class AdController {
     }
 
     @PatchMapping("/{id}/comments/{commentId}")
-    public TComment updateComment(@PathVariable("id") long id, @PathVariable("commentId") long commentId, @RequestBody String text) {
+    public CommentDTO updateComment(@PathVariable("id") long id, @PathVariable("commentId") long commentId, @RequestBody String text) {
         //logic
-        return new TComment();
+        return new CommentDTO();
     }
 
 

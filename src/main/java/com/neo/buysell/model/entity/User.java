@@ -1,37 +1,27 @@
-package com.neo.buysell.model.dto;
+package com.neo.buysell.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.*;
 
-@JsonInclude(value = JsonInclude.Include.NON_DEFAULT)
-public class TUser {
+@Entity(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+    @Column(name = "last_name", nullable = false)
     private String lastName;
     private String email;
     private String phone;
-    @JsonProperty(value = "image", access = JsonProperty.Access.AUTO)
+    @Column(name = "avatar_path")
     private String avatarPath;
 
-    public TUser() {
+    public User() {
 
-    }
-
-    public TUser(long id, String firstName, String lastName, String email, String phone, String avatarPath) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.avatarPath = avatarPath;
     }
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getFirstName() {

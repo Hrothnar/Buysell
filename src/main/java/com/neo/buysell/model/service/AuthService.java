@@ -1,8 +1,8 @@
 package com.neo.buysell.model.service;
 
-import com.neo.buysell.model.dto.TRegister;
+import com.neo.buysell.model.dto.RegisterRequest;
 import com.neo.buysell.model.enumeration.Role;
-import com.neo.buysell.model.service.contract.AuthServiceInt;
+import com.neo.buysell.model.service.inter.AuthServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,14 +31,14 @@ public class AuthService implements AuthServiceInt {
     }
 
     @Override
-    public boolean register(TRegister tRegister, Role role) {
-        if (manager.userExists(tRegister.getUsername())) {
+    public boolean register(RegisterRequest registerRequest, Role role) {
+        if (manager.userExists(registerRequest.getUsername())) {
             return false;
         }
         manager.createUser(User.builder()
                 .passwordEncoder(this.encoder::encode)
-                .password(tRegister.getPassword())
-                .username(tRegister.getUsername())
+                .password(registerRequest.getPassword())
+                .username(registerRequest.getUsername())
                 .roles(role.name())
                 .build());
         return true;

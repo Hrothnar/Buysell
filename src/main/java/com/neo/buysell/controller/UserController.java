@@ -1,7 +1,7 @@
 package com.neo.buysell.controller;
 
-import com.neo.buysell.model.dto.TPassword;
-import com.neo.buysell.model.dto.TUser;
+import com.neo.buysell.model.dto.PasswordRequest;
+import com.neo.buysell.model.dto.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,21 +14,21 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     @PostMapping("/set_password")
-    public TPassword setPassword(@RequestBody TPassword tPassword) {
+    public PasswordRequest setPassword(@RequestBody PasswordRequest passwordRequest) {
         //logic
-        return new TPassword();
+        return new PasswordRequest();
     }
 
     @GetMapping("/me")
-    public TUser getUser(HttpServletRequest request) {
+    public UserDTO getUser(HttpServletRequest request) {
         //logic
-        return new TUser();
+        return new UserDTO();
     }
 
     @PatchMapping("/me")
-    public TUser updateInfo(HttpServletRequest request, @RequestBody TUser tUser) {
+    public UserDTO updateInfo(HttpServletRequest request, @RequestBody UserDTO userDTO) {
         //logic
-        return tUser;
+        return userDTO;
     }
 
     @PatchMapping("/me/image")

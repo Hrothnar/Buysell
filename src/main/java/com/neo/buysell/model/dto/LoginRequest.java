@@ -1,16 +1,11 @@
 package com.neo.buysell.model.dto;
 
-public class TLogin {
+public class LoginRequest {
     private String username;
     private String password;
 
-    public TLogin() {
+    public LoginRequest() {
 
-    }
-
-    public TLogin(String username, String password) {
-        this.username = username;
-        this.password = password;
     }
 
     public String getUsername() {

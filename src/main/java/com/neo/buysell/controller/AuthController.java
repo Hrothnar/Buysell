@@ -1,9 +1,9 @@
 package com.neo.buysell.controller;
 
-import com.neo.buysell.model.dto.TLogin;
-import com.neo.buysell.model.dto.TRegister;
+import com.neo.buysell.model.dto.LoginRequest;
+import com.neo.buysell.model.dto.RegisterRequest;
 import com.neo.buysell.model.enumeration.Role;
-import com.neo.buysell.model.service.contract.AuthServiceInt;
+import com.neo.buysell.model.service.inter.AuthServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody TLogin tLogin) {
-        if (authService.login(tLogin.getUsername(), tLogin.getPassword())) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        if (authService.login(loginRequest.getUsername(), loginRequest.getPassword())) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -32,9 +32,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody TRegister tRegister) {
-        Role role = tRegister.getRole() == null ? Role.USER : tRegister.getRole();
-        if (authService.register(tRegister, role)) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+        Role role = registerRequest.getRole() == null ? Role.USER : registerRequest.getRole();
+        if (authService.register(registerRequest, role)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
