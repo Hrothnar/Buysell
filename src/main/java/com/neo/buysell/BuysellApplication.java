@@ -1,7 +1,5 @@
 package com.neo.buysell;
 
-import com.neo.buysell.model.dto.CommentDTO;
-import com.neo.buysell.model.entity.Comment;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

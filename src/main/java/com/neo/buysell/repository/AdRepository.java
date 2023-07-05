@@ -1,7 +1,6 @@
 package com.neo.buysell.repository;
 
 import com.neo.buysell.model.entity.Ad;
-import com.sun.istack.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
