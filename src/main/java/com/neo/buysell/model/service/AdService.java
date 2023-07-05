@@ -3,6 +3,7 @@ package com.neo.buysell.model.service;
 import com.neo.buysell.model.dto.*;
 import com.neo.buysell.model.entity.Ad;
 import com.neo.buysell.model.entity.Comment;
+import com.neo.buysell.model.entity.User;
 import com.neo.buysell.repository.AdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +20,25 @@ import java.util.stream.Collectors;
 @Service
 public class AdService {
     private final static String IMAGE_PATH = "images/";
+    private final static String AVATAR_PATH = "avatars/";
 
     private final AdRepository adRepository;
     private final CommentService commentService;
+    private final UserService userService;
 
     @Autowired
-    public AdService(AdRepository adRepository, CommentService commentService) {
+    public AdService(AdRepository adRepository, CommentService commentService, UserService userService) {
         this.adRepository = adRepository;
         this.commentService = commentService;
+        this.userService = userService;
+
+        User user = new User();
+        user.setPhone("+7888989898");
+        user.setFirstName("Dude");
+        user.setLastName("Dudov");
+        user.setEmail("dude@mail.ru");
+        user.setAvatarPath("D:\\Instruments\\Projects\\IDEA\\Buysell\\avatars\\avatar.png");
+        userService.save(user);
     }
 
     public AdsDTO getAllAds() {
@@ -43,10 +55,8 @@ public class AdService {
     }
 
     public void removeAd(long id) {
-        boolean isDeleted = adRepository.deleteAdById(id);
-        if (!isDeleted) {
-            throw new RuntimeException(); //TODO
-        }
+        Ad ad = adRepository.findById(id).orElseThrow(() -> new RuntimeException());//TODO
+        adRepository.delete(ad);
     }
 
     public AdDTO updateAd(long id, AdUpdaterDTO adUpdaterDTO) {
@@ -58,20 +68,20 @@ public class AdService {
         return AdDTO.toDto(ad);
     }
 
-    public AdDTO updateAd(long id, MultipartFile image) {
+    public byte[] updateAd(long id, MultipartFile file) {
         Ad ad = adRepository.findById(id).orElseThrow(() -> new RuntimeException());//TODO
+        byte[] bytes;
+        Path path = Path.of(ad.getImagePath());
         try {
-            UUID uuid = UUID.randomUUID();
-            Path path = Path.of(IMAGE_PATH + uuid + image.getOriginalFilename());
-            Files.createDirectory(Path.of(IMAGE_PATH));
-            Files.write(path, image.getBytes());
-            Files.delete(Path.of(ad.getImagePath()));
-            ad.setImagePath(path.toString());
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+            bytes = setAdImage(ad, file);
             adRepository.save(ad);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return new AdDTO();
+        return bytes;
     }
 
     public CommentsDTO getAdComments(long id) {
@@ -93,12 +103,9 @@ public class AdService {
         return CommentDTO.toDto(comment);
     }
 
-
     public void removeComment(long id, long commentId) {
-        Ad ad = adRepository.findById(id).orElseThrow(() -> new RuntimeException());//TODO
         Comment comment = commentService.getComment(commentId);
-        ad.removeComment(comment);
-        adRepository.save(ad);
+        commentService.remove(comment);
     }
 
     public CommentDTO updateComment(long id, long commentId, CommentUpdaterDTO commentUpdaterDTO) {
@@ -109,4 +116,54 @@ public class AdService {
         adRepository.save(ad);
         return CommentDTO.toDto(comment);
     }
+
+    public AdDTO addAd(MultipartFile file) {
+        Ad ad = new Ad();
+        AdUpdaterDTO adUpdaterDTO = new AdUpdaterDTO();
+        adUpdaterDTO.description = "Test description";
+        adUpdaterDTO.price = 233.3;
+        adUpdaterDTO.title = "TEST";
+        User user = userService.getUser(1L);
+        ad.setPrice(adUpdaterDTO.price);
+        ad.setTitle(adUpdaterDTO.title);
+        ad.setDescription(adUpdaterDTO.description);
+        user.addAd(ad);
+        setAdImage(ad, file);
+        adRepository.save(ad);
+        return AdDTO.toDto(ad);
+    }
+
+    private byte[] setAdImage(Ad ad, MultipartFile file) {
+        byte[] bytes;
+        Path directory = Path.of(IMAGE_PATH);
+        try {
+            if (!Files.exists(directory)) {
+                Files.createDirectory(directory);
+            }
+            String uuid = UUID.randomUUID().toString().substring(0, 4);
+            bytes = file.getBytes();
+            Path path = Path.of(IMAGE_PATH + uuid + file.getOriginalFilename());
+            Files.write(path, bytes);
+            ad.setImagePath(path.toAbsolutePath().toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e); //TODO
+        }
+        return bytes;
+    }
+
+    private void setAvatar(User user, MultipartFile file) {
+        Path directory = Path.of(AVATAR_PATH);
+        try {
+            if (!Files.exists(directory)) {
+                Files.createDirectory(directory);
+            }
+            String uuid = UUID.randomUUID().toString().substring(0, 4);
+            Path path = Path.of(AVATAR_PATH + uuid + file.getOriginalFilename());
+            Files.write(path, file.getBytes());
+            user.setAvatarPath(path.toAbsolutePath().toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e); //TODO
+        }
+    }
+
 }

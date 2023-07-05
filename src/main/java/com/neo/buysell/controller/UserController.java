@@ -2,6 +2,7 @@ package com.neo.buysell.controller;
 
 import com.neo.buysell.model.dto.PasswordRequest;
 import com.neo.buysell.model.dto.UserDTO;
+import com.neo.buysell.model.dto.UserUpdaterDTO;
 import com.neo.buysell.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +21,27 @@ public class UserController {
     }
 
     @PostMapping("/set_password")
-    public PasswordRequest setPassword(@RequestBody PasswordRequest passwordRequest) {
+    public ResponseEntity<?> setPassword(@RequestBody PasswordRequest passwordRequest) {
         //logic нужны данные авторизации
-        return new PasswordRequest();
+        return ResponseEntity.ok().build(); //200 | 401 Unauthorized | 403 Forbidden
     }
 
     @GetMapping("/me")
     public UserDTO getUser() {
         //logic нужны данные авторизации
-        return new UserDTO();
+        return new UserDTO(); // 401 Unauthorized
     }
 
     @PatchMapping("/me")
-    public UserDTO updateInfo(@RequestBody UserDTO userDTO) {
+    public UserUpdaterDTO updateInfo(@RequestBody UserUpdaterDTO userUpdaterDTO) {
         //logic нужны данные авторизации
-        return userDTO;
+        return new UserUpdaterDTO(); // 401 Unauthorized
     }
 
     @PatchMapping("/me/image")
     public ResponseEntity<?> updateAvatar(@RequestParam("image") MultipartFile file) {
         //logic нужны данные авторизации
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build(); // 401 Unauthorized
     }
 
 

@@ -7,17 +7,10 @@ public class AdUpdaterDTO {
     public String title;
     public String description;
 
+
     public AdUpdaterDTO() {
 
     }
-
-//    public static Ad toEntity(AdUpdaterDTO adUpdaterDTO) {
-//        Ad ad = new Ad();
-//        ad.setPrice(adUpdaterDTO.price);
-//        ad.setTitle(adUpdaterDTO.title);
-//        ad.setDescription(adUpdaterDTO.description);
-//        return ad;
-//    }
 
     public static AdUpdaterDTO toDto(Ad ad) {
         AdUpdaterDTO adUpdaterDTO = new AdUpdaterDTO();

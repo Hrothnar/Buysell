@@ -29,8 +29,8 @@ public class Ad {
     }
 
     public void removeComment(Comment comment) {
-        comment.setAd(null);
         this.comments.remove(comment);
+        comment.setAd(null);
     }
 
     public long getId() {

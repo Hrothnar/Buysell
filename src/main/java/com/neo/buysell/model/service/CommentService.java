@@ -21,4 +21,8 @@ public class CommentService {
     public Comment getComment(long id) {
         return commentRepository.findById(id).orElseThrow(() -> new RuntimeException());//TODO
     }
+
+    public void remove(Comment comment) {
+        commentRepository.delete(comment);
+    }
 }

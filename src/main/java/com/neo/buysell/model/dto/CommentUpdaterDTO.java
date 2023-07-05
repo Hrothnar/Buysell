@@ -13,12 +13,6 @@ public class CommentUpdaterDTO {
         this.text = text;
     }
 
-    //    public static Comment toEntity(CommentUpdaterDTO commentUpdaterDTO) {
-//        Comment comment = new Comment();
-//        comment.setText(commentUpdaterDTO.text);
-//        return comment;
-//    }
-
     public static CommentUpdaterDTO toDto(Comment comment) {
         CommentUpdaterDTO commentUpdaterDTO = new CommentUpdaterDTO();
         commentUpdaterDTO.text = comment.getText();
