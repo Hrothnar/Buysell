@@ -1,16 +1,11 @@
 package com.neo.buysell.model.dto;
 
-public class TPassword {
+public class PasswordRequest {
     private String currentPassword;
     private String newPassword;
 
-    public TPassword() {
+    public PasswordRequest() {
 
-    }
-
-    public TPassword(String currentPassword, String newPassword) {
-        this.currentPassword = currentPassword;
-        this.newPassword = newPassword;
     }
 
     public String getCurrentPassword() {
