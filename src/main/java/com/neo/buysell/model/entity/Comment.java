@@ -7,15 +7,11 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "author_id", unique = true, nullable = false)
-    private long authorId;
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-    @Column(name = "avatar_path")
-    private String avatarPath;
     @Column(name = "creation_time", nullable = false)
     private long creationTime;
     private String text;
+    @ManyToOne(targetEntity = Ad.class, cascade = {}, fetch = FetchType.LAZY)
+    private Ad ad;
 
     public Comment() {
 
@@ -23,30 +19,6 @@ public class Comment {
 
     public long getId() {
         return id;
-    }
-
-    public long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(long authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getAvatarPath() {
-        return avatarPath;
-    }
-
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
     }
 
     public long getCreationTime() {
@@ -63,5 +35,13 @@ public class Comment {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Ad getAd() {
+        return ad;
+    }
+
+    public void setAd(Ad ad) {
+        this.ad = ad;
     }
 }

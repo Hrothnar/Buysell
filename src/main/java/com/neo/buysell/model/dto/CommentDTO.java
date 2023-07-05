@@ -3,6 +3,7 @@ package com.neo.buysell.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.neo.buysell.model.entity.Comment;
+import com.neo.buysell.model.entity.User;
 
 @JsonInclude(value = JsonInclude.Include.NON_DEFAULT)
 public class CommentDTO {
@@ -23,22 +24,13 @@ public class CommentDTO {
 
     }
 
-    public static Comment toEntity(CommentDTO commentDTO) {
-        Comment comment = new Comment();
-        comment.setAuthorId(commentDTO.authorId);
-        comment.setFirstName(commentDTO.firstName);
-        comment.setAvatarPath(commentDTO.avatarPath);
-        comment.setText(commentDTO.text);
-        comment.setCreationTime(commentDTO.creationTime);
-        return comment;
-    }
-
     public static CommentDTO toDto(Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
+        User user = comment.getAd().getUser();
         commentDTO.id = comment.getId();
-        commentDTO.authorId = comment.getAuthorId();
-        commentDTO.firstName = comment.getFirstName();
-        commentDTO.avatarPath = comment.getAvatarPath();
+        commentDTO.authorId = user.getId();
+        commentDTO.firstName = user.getFirstName();
+        commentDTO.avatarPath = user.getAvatarPath();
         commentDTO.text = comment.getText();
         commentDTO.creationTime = comment.getCreationTime();
         return commentDTO;

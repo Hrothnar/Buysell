@@ -10,4 +10,8 @@ public class AdsDTO {
 
     }
 
+    public AdsDTO(int count, List<AdDTO> adDTOList) {
+        this.count = count;
+        this.adDTOList = adDTOList;
+    }
 }

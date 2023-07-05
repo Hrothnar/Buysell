@@ -11,13 +11,13 @@ public class UserUpdaterDTO {
 
     }
 
-    public static User toEntity(UserUpdaterDTO userUpdaterDTO) {
-        User user = new User();
-        user.setFirstName(userUpdaterDTO.firstName);
-        user.setLastName(userUpdaterDTO.lastName);
-        user.setPhone(userUpdaterDTO.phone);
-        return user;
-    }
+//    public static User toEntity(UserUpdaterDTO userUpdaterDTO) {
+//        User user = new User();
+//        user.setFirstName(userUpdaterDTO.firstName);
+//        user.setLastName(userUpdaterDTO.lastName);
+//        user.setPhone(userUpdaterDTO.phone);
+//        return user;
+//    }
 
     public static UserUpdaterDTO toDto(User user) {
         UserUpdaterDTO userUpdaterDTO = new UserUpdaterDTO();

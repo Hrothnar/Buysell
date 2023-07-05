@@ -1,6 +1,8 @@
 package com.neo.buysell.model.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "users")
 public class User {
@@ -15,9 +17,21 @@ public class User {
     private String phone;
     @Column(name = "avatar_path")
     private String avatarPath;
+    @OneToMany(targetEntity = Ad.class, cascade = {}, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+    private Set<Ad> ads = new HashSet<>();
 
     public User() {
 
+    }
+
+    public void addAd(Ad ad) {
+        this.ads.add(ad); // больше "ad" богу "ad"
+        ad.setUser(this);
+    }
+
+    public void addComment(Ad ad, Comment comment) { //опционально, может не понадобится
+        ad.addComment(comment);
+        addAd(ad);
     }
 
     public long getId() {
@@ -62,5 +76,13 @@ public class User {
 
     public void setAvatarPath(String avatarPath) {
         this.avatarPath = avatarPath;
+    }
+
+    public Set<Ad> getAds() {
+        return ads;
+    }
+
+    public void setAds(Set<Ad> ads) {
+        this.ads = ads;
     }
 }

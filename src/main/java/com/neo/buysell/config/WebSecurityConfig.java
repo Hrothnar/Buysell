@@ -40,9 +40,9 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorization -> authorization
                         .mvcMatchers(AUTH_WHITELIST)
                         .permitAll()
-                        .mvcMatchers("/ads/**", "/users/**")
-                        .authenticated())
-                .cors()
+//                        .mvcMatchers("/ads/**", "/users/**")
+//                        .authenticated())
+                ).cors()
                 .and()
                 .httpBasic(Customizer.withDefaults());
         return http.build();

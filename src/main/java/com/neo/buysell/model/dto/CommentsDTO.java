@@ -9,4 +9,9 @@ public class CommentsDTO {
     public CommentsDTO() {
 
     }
+
+    public CommentsDTO(int count, List<CommentDTO> commentDTOS) {
+        this.count = count;
+        this.commentDTOS = commentDTOS;
+    }
 }

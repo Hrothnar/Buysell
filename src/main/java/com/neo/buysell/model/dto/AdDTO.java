@@ -13,24 +13,14 @@ public class AdDTO {
     public double price;
     public String title;
 
-
     public AdDTO() {
 
-    }
-
-    public static Ad toEntity(AdDTO adDTO) {
-        Ad ad = new Ad();
-        ad.setAuthorId(adDTO.authorId);
-        ad.setTitle(adDTO.title);
-        ad.setPrice(adDTO.price);
-        ad.setImagePath(adDTO.imagePath);
-        return ad;
     }
 
     public static AdDTO toDto(Ad ad) {
         AdDTO adDTO = new AdDTO();
         adDTO.id = ad.getId();
-        adDTO.authorId = ad.getAuthorId();
+        adDTO.authorId = ad.getUser().getId();
         adDTO.title = ad.getTitle();
         adDTO.price = ad.getPrice();
         adDTO.imagePath = ad.getImagePath();

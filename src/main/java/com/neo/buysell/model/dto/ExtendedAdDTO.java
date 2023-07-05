@@ -23,8 +23,9 @@ public class ExtendedAdDTO {
 
     }
 
-    public static ExtendedAdDTO toDto(Ad ad, User user) {
+    public static ExtendedAdDTO toDto(Ad ad) {
         ExtendedAdDTO extendedAdDTO = new ExtendedAdDTO();
+        User user = ad.getUser();
         extendedAdDTO.id = ad.getId();
         extendedAdDTO.imagePath = ad.getImagePath();
         extendedAdDTO.price = ad.getPrice();

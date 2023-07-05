@@ -17,25 +17,4 @@ public class UserDTO {
 
     }
 
-    public static User toEntity(UserDTO userDTO) {
-        User user = new User();
-        user.setFirstName(userDTO.firstName);
-        user.setLastName(userDTO.lastName);
-        user.setEmail(userDTO.email);
-        user.setPhone(userDTO.phone);
-        user.setAvatarPath(userDTO.avatarPath);
-        return user;
-    }
-
-    public static UserDTO toDto(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.id = user.getId();
-        userDTO.firstName = user.getFirstName();
-        userDTO.lastName = user.getLastName();
-        userDTO.email = user.getEmail();
-        userDTO.phone = user.getPhone();
-        userDTO.avatarPath = user.getAvatarPath();
-        return userDTO;
-    }
-
 }

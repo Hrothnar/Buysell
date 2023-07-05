@@ -3,7 +3,7 @@ package com.neo.buysell.controller;
 import com.neo.buysell.model.dto.LoginRequest;
 import com.neo.buysell.model.dto.RegisterRequest;
 import com.neo.buysell.model.enumeration.Role;
-import com.neo.buysell.model.service.inter.AuthServiceInt;
+import com.neo.buysell.model.service.Interfaccia.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(value = {"http://localhost:3000", "http://127.0.0.1:3000"})
 @RestController
 public class AuthController {
-    private final AuthServiceInt authService;
+    private final AuthService authService;
 
     @Autowired
-    public AuthController(AuthServiceInt authService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
     }
 
