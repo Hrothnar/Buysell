@@ -4,6 +4,7 @@ import com.neo.buysell.model.dto.*;
 import com.neo.buysell.model.service.AdService;
 import com.neo.buysell.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,24 +29,23 @@ public class AdController {
         return allAds;
     }
 
-//  @RequestBody AdUpdaterDTO adUpdaterDTO,
-    @PostMapping()
-    public AdDTO addAd(@RequestParam("image") MultipartFile file) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AdDTO> addAd(@RequestPart("properties") AdUpdaterDTO adUpdaterDTO, @RequestPart("image") MultipartFile file) {
         //logic нужны данные авторизации
-        AdDTO adDTO = adService.addAd(file); // тестовый метод
-        return adDTO; // 201 Created | 401 Unauthorized
+        AdDTO adDTO = adService.addAd(adUpdaterDTO, file); // тестовый метод
+        return ResponseEntity.status(HttpStatus.CREATED).body(adDTO); // 201 Created | 401 Unauthorized
     }
 
     @GetMapping("/{id}")
     public ExtendedAdDTO getAd(@PathVariable("id") long id) {
-        ExtendedAdDTO extendedAdDTO = adService.getAd(id);
+        ExtendedAdDTO extendedAdDTO = adService.getAdDTO(id);
         return extendedAdDTO; // 401 Unauthorized | 404 Not found
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable("id") long id) {
         adService.removeAd(id);
-        return ResponseEntity.ok().build(); // 204 No Content | 401 Unauthorized | 403 Forbidden | 404 Not found
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content | 401 Unauthorized | 403 Forbidden | 404 Not found
     }
 
     @PatchMapping("/{id}")
@@ -67,6 +67,15 @@ public class AdController {
                 .contentLength(bytes.length)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(bytes);  // 401 Unauthorized | 403 Forbidden | 404 Not found
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<byte[]> getAdImage(@PathVariable("id") long id) {
+        byte[] bytes = adService.getImageBytes(id);
+        return ResponseEntity.ok()
+                .contentLength(bytes.length)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(bytes);
     }
 
     @GetMapping("/{id}/comments")

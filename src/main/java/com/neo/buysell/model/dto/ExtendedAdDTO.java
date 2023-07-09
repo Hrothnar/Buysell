@@ -19,6 +19,8 @@ public class ExtendedAdDTO {
     public String email;
     public String phone;
 
+    private final static String GET_IMAGE_ENDPOINT = "/ads/%d/image";
+
     public ExtendedAdDTO() {
 
     }
@@ -27,7 +29,7 @@ public class ExtendedAdDTO {
         ExtendedAdDTO extendedAdDTO = new ExtendedAdDTO();
         User user = ad.getUser();
         extendedAdDTO.id = ad.getId();
-        extendedAdDTO.imagePath = ad.getImagePath();
+        extendedAdDTO.imagePath = String.format(GET_IMAGE_ENDPOINT, ad.getId());
         extendedAdDTO.price = ad.getPrice();
         extendedAdDTO.title = ad.getTitle();
         extendedAdDTO.description = ad.getDescription();

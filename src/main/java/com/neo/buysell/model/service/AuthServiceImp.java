@@ -2,6 +2,7 @@ package com.neo.buysell.model.service;
 
 import com.neo.buysell.model.dto.RegisterRequest;
 import com.neo.buysell.model.enumeration.Role;
+import com.neo.buysell.model.service.Interfaccia.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,7 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthServiceImp implements com.neo.buysell.model.service.Interfaccia.AuthService {
+public class AuthServiceImp implements AuthService {
     private final UserDetailsManager manager;
     private final PasswordEncoder encoder;
 
