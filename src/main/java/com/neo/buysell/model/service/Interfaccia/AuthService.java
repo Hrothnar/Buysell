@@ -1,9 +1,8 @@
 package com.neo.buysell.model.service.Interfaccia;
 
-import com.neo.buysell.model.dto.RegisterRequest;
-import com.neo.buysell.model.enumeration.Role;
+import com.neo.buysell.model.dto.other.Credentials;
 
 public interface AuthService {
-    boolean login(String username, String password);
-    boolean register(RegisterRequest registerRequest, Role role);
+    void login(Credentials credentials);
+    void register(Credentials credentials);
 }

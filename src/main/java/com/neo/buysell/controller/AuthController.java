@@ -1,11 +1,8 @@
 package com.neo.buysell.controller;
 
-import com.neo.buysell.model.dto.LoginRequest;
-import com.neo.buysell.model.dto.RegisterRequest;
-import com.neo.buysell.model.enumeration.Role;
+import com.neo.buysell.model.dto.other.Credentials;
 import com.neo.buysell.model.service.Interfaccia.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,22 +20,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        if (authService.login(loginRequest.getUsername(), loginRequest.getPassword())) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<?> login(@RequestBody Credentials credentials) {
+        authService.login(credentials);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        Role role = registerRequest.getRole() == null ? Role.USER : registerRequest.getRole();
-        if (authService.register(registerRequest, role)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+    public ResponseEntity<?> register(@RequestBody Credentials credentials) {
+        authService.register(credentials);
+        return ResponseEntity.ok().build();
     }
 
 }

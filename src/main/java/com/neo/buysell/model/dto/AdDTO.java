@@ -2,8 +2,7 @@ package com.neo.buysell.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.neo.buysell.model.entity.Ad;
-
-import java.text.MessageFormat;
+import com.neo.buysell.model.util.Paths;
 
 public class AdDTO {
     @JsonProperty(value = "pk")
@@ -15,8 +14,6 @@ public class AdDTO {
     public double price;
     public String title;
 
-    private final static String GET_IMAGE_ENDPOINT = "/ads/%d/image";
-
     public AdDTO() {
 
     }
@@ -27,7 +24,7 @@ public class AdDTO {
         adDTO.authorId = ad.getUser().getId();
         adDTO.title = ad.getTitle();
         adDTO.price = ad.getPrice();
-        adDTO.imagePath = String.format(GET_IMAGE_ENDPOINT, ad.getId());
+        adDTO.imagePath = String.format(Paths.GET_IMAGE_ENDPOINT, ad.getId());
         return adDTO;
     }
 }
