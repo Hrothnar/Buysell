@@ -13,9 +13,7 @@ import java.io.IOException;
 public class BasicAuthCorsFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filter) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter) throws ServletException, IOException {
         response.addHeader("Access-Control-Allow-Credentials", "true");
         filter.doFilter(request, response);
     }

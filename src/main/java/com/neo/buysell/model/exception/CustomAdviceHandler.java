@@ -1,7 +1,6 @@
 package com.neo.buysell.model.exception;
 
-import com.neo.buysell.model.exception.particular.CustomException;
-import com.neo.buysell.model.exception.particular.EntityNotFound;
+import com.neo.buysell.model.exception.particular.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,12 @@ import java.sql.Timestamp;
 @RestControllerAdvice()
 public class CustomAdviceHandler {
 
-    @ExceptionHandler(value = {EntityNotFound.class})
+    @ExceptionHandler(value = {EntityNotFound.class,
+            WrongPasswordException.class,
+            UserAlreadyExistsException.class,
+            NotAuthenticatedException.class,
+            NotAuthorizedException.class}
+    )
     public ResponseEntity<Error> handleEntityNotFoundException(CustomException ex, HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status = ex.getStatus();

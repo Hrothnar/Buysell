@@ -13,12 +13,19 @@ public class User {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
+    private String username;
+    private String password;
     private String email;
     private String phone;
     @Column(name = "avatar_path")
     private String avatarPath;
     @OneToMany(targetEntity = Ad.class, cascade = {}, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
     private Set<Ad> ads = new HashSet<>();
+    @ManyToMany(targetEntity = Role.class, cascade = {}, fetch = FetchType.LAZY)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
 
@@ -84,5 +91,29 @@ public class User {
 
     public void setAds(Set<Ad> ads) {
         this.ads = ads;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
