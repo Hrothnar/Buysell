@@ -13,6 +13,9 @@ public enum RoleType {
     }
 
     public static String getPreparedRole(String role) {
+        if (role == null) {
+            return RoleType.USER.roleWithPrefix;
+        }
         return role.startsWith(PREFIX) ? role : PREFIX + role;
     }
 

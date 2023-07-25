@@ -7,7 +7,7 @@ import com.neo.buysell.model.enumeration.RoleType;
 import com.neo.buysell.model.exception.particular.EntityNotFound;
 import com.neo.buysell.model.exception.particular.UserAlreadyExistsException;
 import com.neo.buysell.model.exception.particular.WrongPasswordException;
-import com.neo.buysell.model.service.Interfaccia.AuthService;
+import com.neo.buysell.model.service.special.SecurityUserService;
 import com.neo.buysell.model.util.Paths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthServiceImp implements AuthService {
+public class AuthService {
     private final SecurityUserService userService;
     private final PasswordEncoder encoder;
     private final RoleService roleService;
 
     @Autowired
-    public AuthServiceImp(SecurityUserService userService, PasswordEncoder encoder, RoleService roleService) {
+    public AuthService(SecurityUserService userService, PasswordEncoder encoder, RoleService roleService) {
         this.userService = userService;
         this.encoder = encoder;
         this.roleService = roleService;
@@ -38,7 +38,6 @@ public class AuthServiceImp implements AuthService {
         }
     }
 
-    @Override
     public void login(Credentials credentials) {
         String username = credentials.username;
         Optional<User> optional = userService.getWrappedUser(username);
@@ -52,7 +51,6 @@ public class AuthServiceImp implements AuthService {
         }
     }
 
-    @Override
     public void register(Credentials credentials) {
         Optional<User> optional = userService.getWrappedUser(credentials.username);
         if (optional.isPresent()) {

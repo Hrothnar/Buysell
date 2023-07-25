@@ -4,6 +4,7 @@ import com.neo.buysell.model.dto.ImageDTO;
 import com.neo.buysell.model.dto.PasswordUpdaterDTO;
 import com.neo.buysell.model.dto.UserDTO;
 import com.neo.buysell.model.dto.UserUpdaterDTO;
+import com.neo.buysell.model.entity.User;
 import com.neo.buysell.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,45 +25,30 @@ public class UserController {
 
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword(@RequestBody PasswordUpdaterDTO passwordUpdaterDTO, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
         userService.setPassword(passwordUpdaterDTO, authentication);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/me")
     public UserDTO getUser(Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        UserDTO userDTO = userService.getUserDTO(authentication);
-        return userDTO;
+        User user = userService.getUser(authentication.getName());
+        return UserDTO.toUserDto(user);
     }
 
     @PatchMapping("/me")
     public UserUpdaterDTO updateInfo(@RequestBody UserUpdaterDTO userUpdaterDTO, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
         userService.updateInfo(userUpdaterDTO, authentication);
         return userUpdaterDTO;
     }
 
     @PatchMapping("/me/image")
     public ResponseEntity<?> updateAvatar(@RequestParam("image") MultipartFile file, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
         userService.updateAvatar(file, authentication);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/me/image")
     public ResponseEntity<byte[]> getAvatar(Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
         ImageDTO avatar = userService.getAvatar(authentication);
         byte[] bytes = avatar.bytes;
         return ResponseEntity.ok()

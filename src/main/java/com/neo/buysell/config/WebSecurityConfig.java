@@ -1,6 +1,6 @@
 package com.neo.buysell.config;
 
-import com.neo.buysell.model.service.SecurityUserService;
+import com.neo.buysell.model.service.special.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,6 @@ public class WebSecurityConfig {
 
     private static final String[] PROTECTED = {"/ads/**", "/users/**"};
 
-
     @Autowired
     public WebSecurityConfig(SecurityUserService userService) {
         this.userService = userService;
@@ -40,24 +39,12 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(conf -> conf.mvcMatchers(HttpMethod.GET, "/ads/*/image").permitAll());
         http.authorizeHttpRequests(conf -> conf.mvcMatchers(HttpMethod.GET, "/ads").permitAll());
         http.authorizeHttpRequests(conf -> conf.mvcMatchers(PROTECTED).hasAnyRole("USER", "ADMIN"));
-//        http.authorizeHttpRequests(conf -> conf.anyRequest().permitAll());
         http.csrf(conf -> conf.disable());
         http.cors(Customizer.withDefaults());
         http.httpBasic(Customizer.withDefaults());
         http.authenticationProvider(authenticationProvider());
         return http.build();
     }
-
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
-//        UserDetails user = User.builder()
-//                .username("user@gmail.com")
-//                .password("password")
-//                .passwordEncoder(plainText -> passwordEncoder().encode(plainText))
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

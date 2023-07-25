@@ -1,4 +1,4 @@
-package com.neo.buysell.model.service;
+package com.neo.buysell.model.service.special;
 
 import com.neo.buysell.model.entity.Role;
 import com.neo.buysell.model.entity.User;

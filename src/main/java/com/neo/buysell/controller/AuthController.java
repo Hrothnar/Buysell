@@ -1,7 +1,7 @@
 package com.neo.buysell.controller;
 
 import com.neo.buysell.model.dto.other.Credentials;
-import com.neo.buysell.model.service.Interfaccia.AuthService;
+import com.neo.buysell.model.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

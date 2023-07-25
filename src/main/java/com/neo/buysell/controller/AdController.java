@@ -1,6 +1,7 @@
 package com.neo.buysell.controller;
 
 import com.neo.buysell.model.dto.*;
+import com.neo.buysell.model.entity.Ad;
 import com.neo.buysell.model.service.AdService;
 import com.neo.buysell.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,79 +27,55 @@ public class AdController {
 
     @GetMapping()
     public AdsDTO getAllAds() {
-        AdsDTO allAds = adService.getAllAds();
-        return allAds;
+        return adService.getAllAds();
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdDTO> addAd(@RequestPart("properties") AdUpdaterDTO adUpdaterDTO,
                                        @RequestPart("image") MultipartFile file,
                                        Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
         AdDTO adDTO = adService.addAd(adUpdaterDTO, file, authentication);
         return ResponseEntity.status(HttpStatus.CREATED).body(adDTO);
     }
 
     @GetMapping("/{id}")
-    public ExtendedAdDTO getAd(@PathVariable("id") long id, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        ExtendedAdDTO extendedAdDTO = adService.getAdDTO(id);
-        return extendedAdDTO;
+    public ExtendedAdDTO getAd(@PathVariable("id") long id) {
+        Ad ad = adService.getAd(id);
+        return ExtendedAdDTO.toDto(ad);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(@PathVariable("id") long id, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
         adService.removeAd(id, authentication);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PatchMapping("/{id}")
     public AdDTO updateAd(@PathVariable("id") long id, @RequestBody AdUpdaterDTO adUpdaterDTO, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        AdDTO adDTO = adService.updateAd(id, adUpdaterDTO, authentication);
-        return adDTO;
+        return adService.updateAd(id, adUpdaterDTO, authentication);
     }
 
     @GetMapping("/me")
     public AdsDTO getAllUserAds(Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        AdsDTO userAds = userService.getUserAds(authentication);
-        return userAds;
+        return userService.getUserAds(authentication);
     }
 
     @PatchMapping("/{id}/image")
     public ResponseEntity<byte[]> updateAdImage(@PathVariable("id") long id,
                                                 @RequestParam("image") MultipartFile file,
                                                 Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        ImageDTO imageDTO = adService.updateAdImage(id, file, authentication);
-        byte[] bytes = imageDTO.bytes;
+        ImageDTO image = adService.updateAdImage(id, file, authentication);
+        byte[] bytes = image.bytes;
         return ResponseEntity.ok()
                 .contentLength(bytes.length)
-                .contentType(imageDTO.mediaType)
+                .contentType(image.mediaType)
                 .body(bytes);
     }
 
     @GetMapping("/{id}/image")
-    public ResponseEntity<byte[]> getAdImage(@PathVariable("id") long id, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        ImageDTO imageDTO = adService.getImageDTO(id);
-        byte[] bytes = imageDTO.bytes;
+    public ResponseEntity<byte[]> getAdImage(@PathVariable("id") long id) {
+        ImageDTO image = adService.getAdImage(id);
+        byte[] bytes = image.bytes;
         return ResponseEntity.ok()
                 .contentLength(bytes.length)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -106,28 +83,17 @@ public class AdController {
     }
 
     @GetMapping("/{id}/comments")
-    public CommentsDTO getAdComments(@PathVariable("id") long id, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        CommentsDTO commentsDTO = adService.getAdComments(id);
-        return commentsDTO;
+    public CommentsDTO getAdComments(@PathVariable("id") long id) {
+        return adService.getAdComments(id);
     }
 
     @PostMapping("/{id}/comments")
-    public CommentDTO addComment(@PathVariable("id") long id, @RequestBody CommentUpdaterDTO commentUpdaterDTO, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
-        CommentDTO commentDTO = adService.addCommentToAd(id, commentUpdaterDTO);
-        return commentDTO;
+    public CommentDTO addComment(@PathVariable("id") long id, @RequestBody CommentUpdaterDTO commentUpdaterDTO) {
+        return adService.addCommentToAd(id, commentUpdaterDTO);
     }
 
     @DeleteMapping("/{id}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable("id") long id, @PathVariable("commentId") long commentId, Authentication authentication) {
-//        if (!authentication.isAuthenticated()) {
-//            throw new NotAuthenticatedException(HttpStatus.UNAUTHORIZED);
-//        }
         adService.removeComment(id, commentId, authentication);
         return ResponseEntity.ok().build();
     }
@@ -137,8 +103,7 @@ public class AdController {
                                     @PathVariable("commentId") long commentId,
                                     @RequestBody CommentUpdaterDTO commentUpdaterDTO,
                                     Authentication authentication) {
-        CommentDTO commentDTO = adService.updateComment(id, commentId, commentUpdaterDTO, authentication);
-        return commentDTO;
+        return adService.updateComment(id, commentId, commentUpdaterDTO, authentication);
     }
 
 }
