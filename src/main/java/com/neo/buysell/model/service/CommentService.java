@@ -16,7 +16,7 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Comment save(Comment comment) {
+    public Comment saveComment(Comment comment) {
         return commentRepository.save(comment);
     }
 
@@ -24,7 +24,7 @@ public class CommentService {
         return commentRepository.findById(id).orElseThrow(() -> new EntityNotFound(Comment.class, HttpStatus.NOT_FOUND));
     }
 
-    public void remove(Comment comment) {
+    public void removeComment(Comment comment) {
         commentRepository.delete(comment);
     }
 }
