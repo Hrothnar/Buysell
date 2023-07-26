@@ -9,6 +9,7 @@ public class Comment {
     private long id;
     @Column(name = "creation_time", nullable = false)
     private long creationTime;
+    @Column(nullable = false, length = 1024)
     private String text;
     @ManyToOne(targetEntity = Ad.class, cascade = {}, fetch = FetchType.LAZY)
     private Ad ad;
