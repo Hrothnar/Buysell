@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="users_roles_table_1" author="Kirill">
+
+        <preConditions>
+            <not>
+                <tableExists tableName="users_roles"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="users_roles">
+            <column name="user_id" type="BIGINT"/>
+            <column name="role_id" type="BIGINT"/>
+        </createTable>
+
+        <addPrimaryKey tableName="users_roles" columnNames="user_id, role_id"/>
+
+        <addForeignKeyConstraint baseTableName="users_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="users_roles"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_role_id"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"/>
+
+        <createIndex tableName="users_roles" indexName="i_user_id.role_id_users_roles" unique="true">
+            <column name="user_id"/>
+            <column name="role_id"/>
+        </createIndex>
+
+    </changeSet>
+</databaseChangeLog>

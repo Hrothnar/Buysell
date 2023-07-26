@@ -9,22 +9,26 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name", nullable = false, length = 32)
     private String firstName;
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name", nullable = false, length = 32)
     private String lastName;
+    @Column(name = "username", nullable = false, unique = true, length = 32)
     private String username;
+    @Column(nullable = false, length = 256)
     private String password;
+    @Column(unique = true, length = 32)
     private String email;
+    @Column(unique = true, length = 16)
     private String phone;
-    @Column(name = "avatar_path")
+    @Column(name = "avatar_path", nullable = false, length = 64)
     private String avatarPath;
     @OneToMany(targetEntity = Ad.class, cascade = {}, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
     private Set<Ad> ads = new HashSet<>();
     @ManyToMany(targetEntity = Role.class, cascade = {}, fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     public User() {
@@ -32,13 +36,8 @@ public class User {
     }
 
     public void addAd(Ad ad) {
-        this.ads.add(ad); // больше "ad" богу "ad"
+        this.ads.add(ad);
         ad.setUser(this);
-    }
-
-    public void addComment(Ad ad, Comment comment) { //опционально, может не понадобится
-        ad.addComment(comment);
-        addAd(ad);
     }
 
     public long getId() {

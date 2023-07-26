@@ -1,6 +1,7 @@
 package com.neo.buysell.model.entity;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,10 +10,13 @@ public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "image_path")
+    @Column(name = "image_path", length = 64)
     private String imagePath;
+    @Column(nullable = false)
     private double price;
+    @Column(nullable = false, length = 64)
     private String title;
+    @Column(nullable = false, length = 512)
     private String description;
     @ManyToOne(targetEntity = User.class, cascade = {}, fetch = FetchType.LAZY)
     private User user;
@@ -26,11 +30,6 @@ public class Ad {
     public void addComment(Comment comment) {
         this.comments.add(comment);
         comment.setAd(this);
-    }
-
-    public void removeComment(Comment comment) {
-        this.comments.remove(comment);
-        comment.setAd(null);
     }
 
     public long getId() {
@@ -78,10 +77,7 @@ public class Ad {
     }
 
     public Set<Comment> getComments() {
-        return comments;
+        return Collections.unmodifiableSet(comments);
     }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
 }
