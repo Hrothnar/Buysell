@@ -1,6 +1,7 @@
 package com.neo.buysell.model.entity;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -109,10 +110,7 @@ public class User {
     }
 
     public Set<Role> getRoles() {
-        return roles;
+        return Collections.unmodifiableSet(roles);
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }

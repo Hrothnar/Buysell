@@ -9,10 +9,6 @@ public class CommentsDTO {
     @JsonProperty(value = "results")
     public List<CommentDTO> commentDTOS;
 
-    public CommentsDTO() {
-
-    }
-
     public CommentsDTO(int count, List<CommentDTO> commentDTOS) {
         this.count = count;
         this.commentDTOS = commentDTOS;

@@ -13,16 +13,12 @@ public class ExtendedAdDTO {
     public double price;
     public String title;
     public String description;
-    @JsonProperty(value ="authorFirstName")
+    @JsonProperty(value = "authorFirstName")
     public String firstName;
-    @JsonProperty(value ="authorLastName")
+    @JsonProperty(value = "authorLastName")
     public String lastName;
     public String email;
     public String phone;
-
-    public ExtendedAdDTO() {
-
-    }
 
     public static ExtendedAdDTO toDto(Ad ad) {
         ExtendedAdDTO extendedAdDTO = new ExtendedAdDTO();
@@ -38,5 +34,4 @@ public class ExtendedAdDTO {
         extendedAdDTO.phone = user.getPhone();
         return extendedAdDTO;
     }
-
 }

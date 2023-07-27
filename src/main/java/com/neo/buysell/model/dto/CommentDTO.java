@@ -16,13 +16,8 @@ public class CommentDTO {
     @JsonProperty(value = "authorImage")
     public String avatarPath;
     @JsonProperty(value = "createdAt")
-    public long creationTime; //дата и время создания комментария в миллисекундах с 00:00:00 01.01.1970
+    public long creationTime; // unix time
     public String text;
-
-
-    public CommentDTO() {
-
-    }
 
     public static CommentDTO toDto(Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
@@ -35,6 +30,4 @@ public class CommentDTO {
         commentDTO.creationTime = comment.getCreationTime();
         return commentDTO;
     }
-
-
 }

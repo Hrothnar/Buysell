@@ -1,6 +1,9 @@
 package com.neo.buysell.model.exception;
 
+import com.neo.buysell.model.enumeration.RoleType;
 import com.neo.buysell.model.exception.particular.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +16,13 @@ import java.sql.Timestamp;
 @RestControllerAdvice()
 public class CustomAdviceHandler {
 
-    @ExceptionHandler(value = {EntityNotFound.class,
+    private static final Logger LOG = LoggerFactory.getLogger(CustomAdviceHandler.class);
+
+    @ExceptionHandler(value = {
+            EntityNotFound.class,
             WrongPasswordException.class,
+            RuntimeIOException.class,
             UserAlreadyExistsException.class,
-            NotAuthenticatedException.class,
             NotAuthorizedException.class}
     )
     public ResponseEntity<Error> handleEntityNotFoundException(CustomException ex, HttpServletRequest request) {
@@ -27,6 +33,7 @@ public class CustomAdviceHandler {
         error.setStatus(status.value());
         error.setMessage(ex.getMessage());
         error.setPath(request.getRequestURI());
+        LOG.error("Exception {} has occurred with message: {}", ex.getName(), ex.getMessage());
         return new ResponseEntity<>(error, headers, status);
     }
 

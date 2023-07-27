@@ -9,10 +9,6 @@ public class AdsDTO {
     @JsonProperty(value = "results")
     public List<AdDTO> adDTOList;
 
-    public AdsDTO() {
-
-    }
-
     public AdsDTO(int count, List<AdDTO> adDTOList) {
         this.count = count;
         this.adDTOList = adDTOList;

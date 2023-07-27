@@ -16,10 +16,6 @@ public class Role {
 
     }
 
-    public Role(String name) {
-        this.name = name;
-    }
-
     public long getId() {
         return id;
     }

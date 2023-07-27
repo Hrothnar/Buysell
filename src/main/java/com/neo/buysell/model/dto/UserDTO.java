@@ -13,10 +13,6 @@ public class UserDTO {
     @JsonProperty(value = "image")
     public String avatarPath;
 
-    public UserDTO() {
-
-    }
-
     public static UserDTO toUserDto(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.id = user.getId();
