@@ -1,6 +1,5 @@
 package com.neo.buysell.model.exception;
 
-import com.neo.buysell.model.enumeration.RoleType;
 import com.neo.buysell.model.exception.particular.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

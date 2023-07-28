@@ -2,7 +2,6 @@ package com.neo.buysell.model.repository;
 
 import com.neo.buysell.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 

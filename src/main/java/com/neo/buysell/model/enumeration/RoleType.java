@@ -1,6 +1,5 @@
 package com.neo.buysell.model.enumeration;
 
-import com.neo.buysell.model.dto.ImageDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,7 +3,6 @@ package com.neo.buysell.model.service;
 import com.neo.buysell.model.dto.other.Credentials;
 import com.neo.buysell.model.entity.Role;
 import com.neo.buysell.model.entity.User;
-import com.neo.buysell.model.enumeration.RoleType;
 import com.neo.buysell.model.exception.particular.EntityNotFound;
 import com.neo.buysell.model.exception.particular.UserAlreadyExistsException;
 import com.neo.buysell.model.exception.particular.WrongPasswordException;

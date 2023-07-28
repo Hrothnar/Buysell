@@ -1,7 +1,5 @@
 package com.neo.buysell.model.entity;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
 @Entity(name = "roles")
