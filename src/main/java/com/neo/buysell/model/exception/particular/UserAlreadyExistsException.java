@@ -13,4 +13,9 @@ public class UserAlreadyExistsException extends RuntimeException implements Cust
     public HttpStatus getStatus() {
         return status;
     }
+
+    @Override
+    public String getMessage() {
+        return "Such user already exists";
+    }
 }

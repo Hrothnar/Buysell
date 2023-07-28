@@ -49,16 +49,18 @@ public class AdService {
     public AdsDTO getAllAds() {
         List<Ad> ads = adRepository.findAll();
         ArrayList<AdDTO> adDTOs = ads.stream()
-                .map(ad -> AdDTO.toDto(ad))
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .map(AdDTO::toDto)
+                .collect(Collectors.toCollection(ArrayList::new));
         return new AdsDTO(adDTOs.size(), adDTOs);
     }
 
     public void removeAd(long id, Authentication authentication) {
         Ad ad = getAd(id);
-        User user = ad.getUser();
-        Permission.checkPermission(user, authentication);
+        Permission.checkPermission(ad.getUser(), authentication);
+        User user = userService.getUser(authentication.getName());
+        user.removeAd(ad);
         removeAd(ad);
+        userService.saveUser(user);
     }
 
     public AdDTO updateAd(long id, AdUpdaterDTO adUpdaterDTO, Authentication authentication) {
@@ -83,14 +85,15 @@ public class AdService {
 
     public ImageDTO getAdImage(long id) {
         Ad ad = getAd(id);
-        return fileService.readImage(ad.getImagePath());
+        String imagePath = ad.getImagePath();
+        return fileService.readImage(imagePath);
     }
 
     public CommentsDTO getAdComments(long id) {
         Ad ad = getAd(id);
         ArrayList<CommentDTO> commentDTOs = ad.getComments().stream()
-                .map(comment -> CommentDTO.toDto(comment))
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .map(CommentDTO::toDto)
+                .collect(Collectors.toCollection(ArrayList::new));
         return new CommentsDTO(commentDTOs.size(), commentDTOs);
     }
 
@@ -101,14 +104,17 @@ public class AdService {
         comment.setCreationTime(System.currentTimeMillis());
         ad.addComment(comment);
         commentService.saveComment(comment);
-        adRepository.save(ad);
+        saveAd(ad);
         return CommentDTO.toDto(comment);
     }
 
     public void removeComment(long id, long commentId, Authentication authentication) {
         Comment comment = commentService.getComment(commentId);
         Permission.checkPermission(comment.getAd().getUser(), authentication);
+        Ad ad = getAd(id);
+        ad.removeComment(comment);
         commentService.removeComment(comment);
+        saveAd(ad);
     }
 
     public CommentDTO updateComment(long id, long commentId, CommentUpdaterDTO commentUpdaterDTO, Authentication authentication) {
@@ -117,7 +123,6 @@ public class AdService {
         Comment comment = commentService.getComment(commentId);
         comment.setText(commentUpdaterDTO.text);
         commentService.saveComment(comment);
-        adRepository.save(ad);
         return CommentDTO.toDto(comment);
     }
 

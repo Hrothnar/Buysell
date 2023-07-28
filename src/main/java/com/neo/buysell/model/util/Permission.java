@@ -12,8 +12,10 @@ import java.util.Collection;
 public class Permission {
 
     public static void checkPermission(User user, Authentication authentication) {
-        if (!(isOwner(user, authentication) || isAdmin(authentication))) {
-            throw new NotAuthorizedException(HttpStatus.FORBIDDEN);
+        boolean isOwner = isOwner(user, authentication);
+        boolean isAdmin = isAdmin(authentication);
+        if (!(isOwner || isAdmin)) {
+            throw new NotAuthorizedException(HttpStatus.FORBIDDEN, "User does not have permission");
         }
     }
 

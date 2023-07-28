@@ -15,13 +15,6 @@ public class Error {
 
     }
 
-    public Error(Timestamp timestamp, int status, String message, String path) {
-        this.timestamp = timestamp;
-        this.status = status;
-        this.message = message;
-        this.path = path;
-    }
-
     public Timestamp getTimestamp() {
         return timestamp;
     }

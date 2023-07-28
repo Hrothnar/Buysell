@@ -14,10 +14,6 @@ public class AdDTO {
     public double price;
     public String title;
 
-    public AdDTO() {
-
-    }
-
     public static AdDTO toDto(Ad ad) {
         AdDTO adDTO = new AdDTO();
         adDTO.id = ad.getId();

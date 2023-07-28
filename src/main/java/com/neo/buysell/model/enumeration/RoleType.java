@@ -1,5 +1,8 @@
 package com.neo.buysell.model.enumeration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public enum RoleType {
     USER("ROLE_USER"),
     ADMIN("ROLE_ADMIN");
@@ -7,6 +10,7 @@ public enum RoleType {
     private final String roleWithPrefix;
 
     private final static String PREFIX = "ROLE_";
+    private static final Logger LOG = LoggerFactory.getLogger(RoleType.class);
 
     RoleType(String roleWithPrefix) {
         this.roleWithPrefix = roleWithPrefix;
@@ -14,6 +18,7 @@ public enum RoleType {
 
     public static String getPreparedRole(String role) {
         if (role == null) {
+            LOG.warn("Role has not been chosen");
             return RoleType.USER.roleWithPrefix;
         }
         return role.startsWith(PREFIX) ? role : PREFIX + role;

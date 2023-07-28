@@ -21,7 +21,7 @@ public class User {
     private String email;
     @Column(unique = true, length = 16)
     private String phone;
-    @Column(name = "avatar_path", nullable = false, length = 64)
+    @Column(name = "avatar_path", nullable = false, length = 256)
     private String avatarPath;
     @OneToMany(targetEntity = Ad.class, cascade = {}, fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
     private Set<Ad> ads = new HashSet<>();
@@ -38,6 +38,11 @@ public class User {
     public void addAd(Ad ad) {
         this.ads.add(ad);
         ad.setUser(this);
+    }
+
+    public void removeAd(Ad ad) {
+        this.ads.remove(ad);
+        ad.setUser(null);
     }
 
     public long getId() {
@@ -112,7 +117,4 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }

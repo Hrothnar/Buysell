@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class RoleService {
     private final RoleRepository roleRepository;
@@ -19,16 +17,9 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public void saveRole(Role role) {
-        roleRepository.save(role);
-    }
-
     public Role getRole(String name) {
         String preparedRole = RoleType.getPreparedRole(name);
         return roleRepository.findByName(preparedRole).orElseThrow(() -> new EntityNotFound(Role.class, HttpStatus.BAD_REQUEST));
     }
 
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
 }

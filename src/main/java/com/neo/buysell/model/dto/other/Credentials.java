@@ -7,9 +7,5 @@ public class Credentials {
     public String lastName;
     public String phone;
     public String role;
-
-    public Credentials() {
-
-    }
 }
 

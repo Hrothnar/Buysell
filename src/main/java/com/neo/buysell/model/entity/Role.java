@@ -1,7 +1,5 @@
 package com.neo.buysell.model.entity;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
 @Entity(name = "roles")
@@ -14,10 +12,6 @@ public class Role {
 
     public Role() {
 
-    }
-
-    public Role(String name) {
-        this.name = name;
     }
 
     public long getId() {
