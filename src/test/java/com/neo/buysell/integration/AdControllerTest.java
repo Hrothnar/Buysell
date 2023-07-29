@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,6 +62,8 @@ public class AdControllerTest {
     private RoleService roleService;
     @Autowired
     private ObjectMapper objectMapper;
+
+    private static final Logger LOG = LoggerFactory.getLogger(AdControllerTest.class);
 
     @Test
     public void getAllAds_shouldReturnAllAds() throws Exception {
