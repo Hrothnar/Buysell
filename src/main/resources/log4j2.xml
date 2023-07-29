@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+
+    <Properties>
+        <Property name="pattern1">%d{dd-MM-yyyy HH:mm} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex</Property>
+        <Property name="pattern2">%d{dd-MM-yyyy HH:mm} %-5p %c{1}:%L - %m%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console"
+                 target="SYSTEM_OUT"
+                 follow="true">
+            <PatternLayout pattern="${pattern1}"/>
+        </Console>
+
+        <RollingFile name="file"
+                     fileName="log/app_log.log"
+                     filePattern="log/app_log{dd-MM-yyyy}.log">
+            <PatternLayout pattern="${pattern1}"/>
+            <Policies>
+                <!-- <TimeBasedTriggeringPolicy interval="1" modulate="true" />-->
+                <SizeBasedTriggeringPolicy size="5MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="3">
+                <Delete basePath="/log" maxDepth="3">
+                    <IfLastModified age="14d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
