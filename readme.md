@@ -5,7 +5,7 @@
 Объявления выставляемые на сайте можно настраивать, определяя им название, описание, цену и установив картинку. Помимо этого, зарегистрированные пользователи имеют возможность оставлять комментарии на карточке товара, а владелец объявления может их удалять, если на, то есть причина.
 Так же пользователь может настраивать свой аккаунт и, на пример, менять аватар.
 
-**Front-end** часть была предоставлена компанией: SkyPro  
+**Front-end** часть была предоставлена компанией: SkyPro.   
 **Back-end** часть была написана мной.
 
 Проект построен на базе **Spring Boot 2.7.10** и использует следующие технологии:
@@ -38,8 +38,8 @@ docker run -p 3000:3000 --rm --name somename ghcr.io/bizinmitya/front-react-avit
 The application represents an online platform for buying and selling goods. 
 Advertisements posted on the website can be customized by providing them with a title, description, price, and an image. In addition to this, registered users have the ability to leave comments on the product card, and the ad owner can delete them if necessary. Users can also customize their accounts, for instance, by changing their avatars.
 
-**The front-end** part of the project was provided by the company SkyPro 
-**The back-end** part was developed by me.
+**The front-end** part of the project was provided by the company SkyPro.  
+**The back-end** part was developed by me.  
 
 The project is built on **Spring Boot 2.7.10** and utilizes the following technologies:
 * Java 11
@@ -51,12 +51,12 @@ The project is built on **Spring Boot 2.7.10** and utilizes the following techno
 * slf4 | log4j2
 * Docker
 
-To run the application, follow these steps:
+To run the application, follow these steps:  
 1) Execute the command:
 ```sh
 docker run -p 3000:3000 --rm --name somename ghcr.io/bizinmitya/front-react-avito:v1.17
 ```
-This will start the front-end part of the application. Replace "somename" with a preferred container name. 
+This will start the front-end part of the application. Replace "somename" with a preferred container name.  
 
 2) In the application.properties file, provide the necessary database connection details.
 
